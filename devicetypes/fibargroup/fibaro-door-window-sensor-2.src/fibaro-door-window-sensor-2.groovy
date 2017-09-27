@@ -22,7 +22,8 @@ metadata {
 		capability "Health Check"
 	
 		attribute "temperatureAlarm", "string"
-	
+		attribute "multiStatus", "string"
+
 		fingerprint mfr: "010F", prod: "0702"
 		fingerprint deviceId: "0x0701", inClusters:"0x5E,0x59,0x22,0x80,0x56,0x7A,0x73,0x98,0x31,0x85,0x70,0x5A,0x72,0x8E,0x71,0x86,0x84"
 		fingerprint deviceId: "0x0701", inClusters:"0x5E,0x59,0x22,0x80,0x56,0x7A,0x73,0x31,0x85,0x70,0x5A,0x72,0x8E,0x71,0x86,0x84"
@@ -289,7 +290,7 @@ def zwaveEvent(physicalgraph.zwave.commands.alarmv2.AlarmReport cmd) {
 				case 22:
 					map.value = "open"
 					map.descriptionText = "${device.displayName} is open"
-                    break
+					break
 				case 23:
 					map.value = "closed"
 					map.descriptionText = "${device.displayName} is closed"
@@ -315,15 +316,15 @@ def zwaveEvent(physicalgraph.zwave.commands.alarmv2.AlarmReport cmd) {
 				switch (cmd.zwaveAlarmEvent) {
 					case 0:
 						map.value = "clear"
-						map.descriptionText = "Tamper alert cleared"
+						map.descriptionText = "Temperature alert cleared"
 						break
 					case 2:
 						map.value = "overheat"
-						map.descriptionText = "Tamper alert: sensor removed or covering opened"
+						map.descriptionText = "Temperature alert: overheating detected"
 						break
 					case 6:
 						map.value = "underheat"
-						map.descriptionText = "Tamper alert: sensor removed or covering opened"
+						map.descriptionText = "Temperature alert: underheating detected"
 						break
 				}
 			}
