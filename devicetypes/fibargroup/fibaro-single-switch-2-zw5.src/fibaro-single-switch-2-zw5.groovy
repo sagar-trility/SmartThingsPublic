@@ -112,6 +112,7 @@ def refresh() {
     def cmds = []
     cmds << zwave.meterV3.meterGet(scale: 0)
     cmds << zwave.meterV3.meterGet(scale: 2)
+	cmds << zwave.switchBinaryV1.switchBinaryGet()
     encapSequence(cmds,1000)
 }
 
@@ -123,6 +124,7 @@ def ping() {
 def installed(){
     log.debug "installed()"
     sendEvent(name: "checkInterval", value: 1920, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID])
+	response(refresh())
 }
 
 //Configuration and synchronization
